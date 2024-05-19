@@ -1,6 +1,4 @@
 ﻿using System.Collections.Immutable;
-using BuildingBlocks.CQRS;
-using Catalog.Api.Models;
 
 namespace Catalog.Api.Products.CreateProduct;
 
@@ -18,7 +16,8 @@ public readonly record struct CreateProductResult()
     public Guid Id { get; init; } = Guid.Empty;
 }
 
-internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal sealed class CreateProductCommandHandler(IDocumentSession session)
+    : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
@@ -30,12 +29,13 @@ internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProduc
             ImageFile = request.ImageFile,
             Price = request.Price
         };
-        
-        //TODO save to database
+
+        session.Store(product);
+        await session.SaveChangesAsync(cancellationToken);
 
         return new CreateProductResult
         {
-            Id = Guid.NewGuid()
+            Id = product.Id
         };
     }
 }

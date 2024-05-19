@@ -1,5 +1,6 @@
 using Catalog.Api;
 using Catalog.Api.Products.CreateProduct;
+using Weasel.Core;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
@@ -19,6 +20,12 @@ builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
+
+builder.Services.AddMarten(options =>
+{
+    options.Connection(builder.Configuration.GetConnectionString("Database")!);
+    options.AutoCreateSchemaObjects = AutoCreate.CreateOrUpdate;
+}).UseLightweightSessions();
 
 var app = builder.Build();
 

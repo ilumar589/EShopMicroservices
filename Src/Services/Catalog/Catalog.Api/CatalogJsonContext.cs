@@ -5,5 +5,6 @@ namespace Catalog.Api;
 
 [JsonSerializable(typeof(CreateProductRequest))]
 [JsonSerializable(typeof(CreateProductResponse))]
-[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+    GenerationMode = JsonSourceGenerationMode.Default)]
 internal partial class CatalogJsonContext : JsonSerializerContext;
