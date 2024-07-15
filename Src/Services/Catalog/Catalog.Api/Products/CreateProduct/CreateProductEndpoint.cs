@@ -16,10 +16,22 @@ public readonly record struct CreateProductResponse()
     public Guid Id { get; init; } = Guid.Empty;
 }
 
+public readonly record struct SayHelloResponse()
+{
+    public string Message { get; init; } = "Hi from test point";
+}
+
 public sealed class CreateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
+        app.MapGet("/entry", () => Task.FromResult(Results.Ok(new SayHelloResponse())))
+        .WithName("EntryPoint")
+        .Produces<SayHelloResponse>(StatusCodes.Status200OK)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .WithSummary("Entry point for testing")
+        .WithDescription("Entry point for testing");
+        
         app.MapPost("/products", async (CreateProductRequest request, ISender sender) =>
         {
             var command = request.Adapt<CreateProductCommand>();

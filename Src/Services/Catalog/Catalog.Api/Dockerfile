@@ -15,6 +15,8 @@ RUN dotnet build "Catalog.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
+ARG ASPNETCORE_Kestrel__Certificates__Default__Password=1234
+ARG ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
 RUN dotnet publish "Catalog.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final

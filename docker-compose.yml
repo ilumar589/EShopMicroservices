@@ -4,3 +4,9 @@
     build:
       context: .
       dockerfile: Src/Services/Catalog/Catalog.Api/Dockerfile
+      
+  catalogdb:
+    image: postgres
+
+volumes:
+  postgres_catalog:
