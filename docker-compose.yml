@@ -7,6 +7,9 @@
       
   catalogdb:
     image: postgres
+    
+  pgadmin:
+    image: dpage/pgadmin4:latest
 
 volumes:
   postgres_catalog:

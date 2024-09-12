@@ -19,6 +19,8 @@ public readonly record struct CreateProductResult()
 internal sealed class CreateProductCommandHandler(IDocumentSession session)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
+    private readonly IDocumentSession _session = session ?? throw new ArgumentNullException(nameof(session));
+    
     public async Task<CreateProductResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var product = new Product
@@ -30,7 +32,7 @@ internal sealed class CreateProductCommandHandler(IDocumentSession session)
             Price = request.Price
         };
 
-        session.Store(product);
+        _session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
 
         return new CreateProductResult

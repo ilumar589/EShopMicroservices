@@ -27,7 +27,7 @@ public sealed class CreateProductEndpoint : ICarterModule
     {
         app.MapGet("/entry", () => Task.FromResult(Results.Ok(new SayHelloResponse())))
         .WithName("EntryPoint")
-        .Produces<SayHelloResponse>(StatusCodes.Status200OK)
+        .Produces<SayHelloResponse>()
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Entry point for testing")
         .WithDescription("Entry point for testing");
