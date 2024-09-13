@@ -2,7 +2,7 @@
 
 namespace Catalog.Api.Products.CreateProduct;
 
-public readonly record struct CreateProductCommand() : ICommand<CreateProductResult>
+public sealed record CreateProductCommand : ICommand<CreateProductResult>
 {
     public string Name { get; init; } = string.Empty;
     public IReadOnlyList<string> Category { get; init; } = ImmutableArray<string>.Empty;
@@ -11,7 +11,7 @@ public readonly record struct CreateProductCommand() : ICommand<CreateProductRes
     public decimal Price { get; init; } = 0;
 }
 
-public readonly record struct CreateProductResult()
+public sealed record CreateProductResult
 {
     public Guid Id { get; init; } = Guid.Empty;
 }

@@ -1,5 +1,6 @@
 using Catalog.Api;
 using Catalog.Api.Products.CreateProduct;
+using Catalog.Api.Products.GetProducts;
 using Weasel.Core;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 builder.Services.AddCarter(configurator: config =>
 {
     config.WithModule<CreateProductEndpoint>();
+    config.WithModule<GetProductsEndpoint>();
 });
 
 builder.Services.AddMediatR(config =>
